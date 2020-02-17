@@ -5,6 +5,7 @@ import java.util.regex.*;
 
 
 
+
 class InfectStatistic 
 {
 	private static final int provinceNum = 32;
@@ -88,7 +89,21 @@ class InfectStatistic
                 {   
                     if(!outProvince.contains(province)) 
                     {
-                        continue;
+                        List<Integer> data = statistics.get(province);
+                        writer.write(province + "    ");
+                    }
+                    else if  
+                    {
+                        String s = GetStringByType(typeparam,"全国");
+                        writer.write(s);
+                        for (int i = 0; i < 31; i++) 
+                        {
+                            if (IsVisited[i]) 
+                            {
+                                String st = GetStringByType(typeparam,provinces[i]);
+                                writer.write(st);
+                            }
+                        }
                     }
                     List<Integer> data = statistics.get(province);
                     writer.write(province + "    ");
