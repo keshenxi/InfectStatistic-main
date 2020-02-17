@@ -150,80 +150,73 @@ class InfectStatistic
     }	
     
     //命令操作
-    public void GetCommand(String[] CommandSource)
-	{
-		int CommandLength = CommandSource.length;
-		if(CommandSource[0].equals("list"))
-		{
-			this.Command = 1;
-		}
-		else
-		{
-			System.out.println(CommandSource[0] + " 不能被解析为合法命令");
-		}
-		for(int i = 1 ; i < CommandLength ; i++)
-		{
-			if(CommandSource[i].equals("-log"))
-			{
-				this.IsLog = true;
-				this.Log = CommandSource[i+1];
-				i++;
-			}
+    private static void cmdactive(argv[])
+    {
+  	int index = 2;
+        while(argv[index])
+        {
+            switch(mapListValue[argv[index]])
+            {
+                case -log:
+                    if(argv[index+1])
+                    {
+                        logPath = argv[index+1];
+                        index++;
+                    }
+                    break;
+                case -out:
+                    if(argv[index+1])
+                    {
+                        outPath = argv[index+1];
+                        index++;
+                    }
+                    break;
+                case -date:
+                    if(argv[index+1][0] != '-')
+                    {
+                        date = argv[index+1];
+                        index++;
+                    }
+                    break;
+                case -type:
+                    while((argv[index+1]) && (argv[index+1][0] != '-'))
+                    {
+                        if(strcmp(argv[index+1] ,"ip") == 0 ||
+                            strcmp(argv[index+1] ,"sp") == 0 ||
+                            strcmp(argv[index+1] ,"cure") == 0 ||
+                            strcmp(argv[index+1] ,"dead") == 0)
+                        {
+                            type.push_back(argv[index+1]);
+                        }
+                        else
+                        {
+                            cout<<"Unknow command: "<<argv[index+1]<<"\n";
+                            exit(0);
+                        }
+                        index++;
+                    }
+                    break;
+                case -province:
+                    while((argv[index+1]) && (argv[index+1][0] != '-'))
+                    {
+                        province.push_back(GbkToUtf8(argv[index+1]));
+                        mapProvince[GbkToUtf8(argv[index+1])].isPrint = true;
+                        index++;
+                    }
+                    break;
+                default:
+                    if(argv[index][0] == '-')
+                    {
+                        cout<<"指令错误: "<<argv[index]<<"\n";
+                    }
+                    break;
+            }
+            index++;
+        }
 
-			else if(CommandSource[i].equals("-out"))
-			{
-				this.IsOut = true;
-				this.Out = CommandSource[i+1];
-				i++;
-			}
-
-			else if(CommandSource[i].equals("-date"))
-			{
-				this.IsDate = true;
-				this.Date = CommandSource[i+1];
-				i++;
-			}
-			
-			else if(CommandSource[i].equals("-province"))
-			{
-				this.IsProvince = true;
-				int j = 0;
-				while(i+1<CommandSource.length&&!Pattern.matches("-.*", CommandSource[i+1]))
-				{
-					this.Province[j] = CommandSource[i+1];
-					i++;
-					j++;
-				}
-			}
-			else if(CommandSource[i].equals("-type"))
-			{
-				this.IsType = true;
-				int j = 0;
-				while(i+1<CommandSource.length && !Pattern.matches("-.*", CommandSource[i+1]))
-				{
-					this.Type[j] = CommandSource[i+1];
-					i++;
-					j++;
-				}
-			}
-			else 
-				System.out.println("命令中包含不合法参数" + CommandSource[i]);
-		}
-		if(!this.IsLog) 
-		{
-			System.out.println("缺少必要的log参数");
-			if(!this.IsOut)
-				System.out.println("缺少必要的out参数");
-			System.exit(1);
-		}
-		if(!this.IsOut) 
-		{
-			System.out.println("缺少必要的out参数");
-			if(!this.IsLog)
-				System.out.println("缺少必要的log参数");
-			System.exit(1);
-		}
-	}
+        list(logPath, outPath, date, type, province);
+    }
+}
 	
 	//判断传入的字符串是否合法日期，false为不合法
 	public boolean isCorrectDate(String date) 
