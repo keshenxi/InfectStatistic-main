@@ -152,66 +152,66 @@ class InfectStatistic
     //命令操作
     private static void cmdactive(argv[])
     {
-  	int index = 2;
-        while(argv[index])
+  	int num = 2;
+        while(argv[num])
         {
-            switch(mapListValue[argv[index]])
+            switch(mapListValue[argv[num]])
             {
                 case -log:
-                    if(argv[index+1])
+                    if(argv[num+1])
                     {
-                        logPath = argv[index+1];
-                        index++;
+                        logPath = argv[num+1];
+                        num++;
                     }
                     break;
                 case -out:
-                    if(argv[index+1])
+                    if(argv[num+1])
                     {
-                        outPath = argv[index+1];
-                        index++;
+                        outPath = argv[num+1];
+                        num++;
                     }
                     break;
                 case -date:
-                    if(argv[index+1][0] != '-')
+                    if(argv[num+1][0] != '-')
                     {
-                        date = argv[index+1];
-                        index++;
+                        date = argv[num+1];
+                        num++;
                     }
                     break;
                 case -type:
-                    while((argv[index+1]) && (argv[index+1][0] != '-'))
+                    while((argv[num+1]) && (argv[num+1][0] != '-'))
                     {
-                        if(strcmp(argv[index+1] ,"ip") == 0 ||
-                            strcmp(argv[index+1] ,"sp") == 0 ||
-                            strcmp(argv[index+1] ,"cure") == 0 ||
-                            strcmp(argv[index+1] ,"dead") == 0)
+                        if(strcmp(argv[num+1] ,"ip") == 0 ||
+                            strcmp(argv[num+1] ,"sp") == 0 ||
+                            strcmp(argv[num+1] ,"cure") == 0 ||
+                            strcmp(argv[num+1] ,"dead") == 0)
                         {
-                            type.push_back(argv[index+1]);
+                            type.push_back(argv[num+1]);
                         }
                         else
                         {
-                            cout<<"Unknow command: "<<argv[index+1]<<"\n";
+                            cout<<"指令错误: "<<argv[num+1]<<"\n";
                             exit(0);
                         }
-                        index++;
+                        num++;
                     }
                     break;
                 case -province:
-                    while((argv[index+1]) && (argv[index+1][0] != '-'))
+                    while((argv[num+1]) && (argv[num+1][0] != '-'))
                     {
-                        province.push_back(GbkToUtf8(argv[index+1]));
-                        mapProvince[GbkToUtf8(argv[index+1])].isPrint = true;
-                        index++;
+                        province.push_back(GbkToUtf8(argv[num+1]));
+                        mapProvince[GbkToUtf8(argv[num+1])].isPrint = true;
+                        num++;
                     }
                     break;
                 default:
-                    if(argv[index][0] == '-')
+                    if(argv[num][0] == '-')
                     {
-                        cout<<"指令错误: "<<argv[index]<<"\n";
+                        cout<<"指令错误: "<<argv[num]<<"\n";
                     }
                     break;
             }
-            index++;
+            num++;
         }
 
         list(logPath, outPath, date, type, province);
